@@ -1,0 +1,28 @@
+{
+  "name": "apply-queue",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "predev": "npm run build --workspace=@applyqueue/shared",
+    "dev": "concurrently -n web,worker -c cyan,magenta \"npm run dev:web\" \"npm run dev:worker\"",
+    "predev:web": "npm run build --workspace=@applyqueue/shared",
+    "dev:web": "npm run dev --workspace=@applyqueue/web",
+    "predev:worker": "npm run build --workspace=@applyqueue/shared",
+    "dev:worker": "npm run dev --workspace=@applyqueue/worker",
+    "build": "npm run build --workspace=@applyqueue/shared && npm run build --workspace=@applyqueue/worker && npm run build --workspace=@applyqueue/web",
+    "lint": "npm run lint --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "typescript": "^5.9.2"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  }
+}
